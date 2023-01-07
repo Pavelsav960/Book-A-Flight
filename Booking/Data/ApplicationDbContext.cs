@@ -13,5 +13,6 @@ namespace Booking.Data
         
         public DbSet<Flight> Flights { get; set; }  
         public DbSet<BookingModel> Bookings { get; set; }    
+        public DbSet<Payment> payments { get; set; }
     }
 }
