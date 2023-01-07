@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Booking.Models.Flight>
+
+@{
+    ViewData["Title"] = "Flight List";
+}
+
+<h1>Flight List</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OriginCountry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DestinationCountry)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OriginCountry)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DestinationCountry)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlightDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableSeats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-action="Book" asp-route-id="@item.FlightId">Book</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
