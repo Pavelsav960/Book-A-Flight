@@ -15,7 +15,9 @@ namespace Booking.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Search SerachFilter = new Search();
+            SerachFilter.From = "zimbubue";
+            return View(SerachFilter);
         }
 
         public IActionResult Privacy()
