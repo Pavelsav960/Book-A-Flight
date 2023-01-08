@@ -1,0 +1,38 @@
+﻿@model Booking.Models.Flight
+
+@{
+    ViewData["Title"] = "Book";
+}
+
+<h1>Book</h1>
+
+<div>
+    <h4>Congratulations You Book A Flight</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OriginCountry)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OriginCountry)
+        </dd>
+        @*    <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.FlightDestination)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.FlightDestination)
+        </dd>
+        <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Capacity)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Capacity)
+        </dd>*@
+    </dl>
+</div>
+<div>
+      @* <a asp-action="Edit" asp-route-id="model">Edit</a>*@
+    
+    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Book This Flight</a>
+</div>

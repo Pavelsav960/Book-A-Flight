@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Booking.Models
 {
@@ -12,5 +13,7 @@ namespace Booking.Models
         public int DepartingSeatNumber { get; set; }
         [Required]
         public string BookingEmail { get; set; }
+
+
     }
 }

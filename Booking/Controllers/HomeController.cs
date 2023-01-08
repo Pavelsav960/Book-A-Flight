@@ -1,4 +1,5 @@
-﻿using Booking.Models;
+﻿using Booking.Data;
+using Booking.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -18,8 +19,16 @@ namespace Booking.Controllers
         public IActionResult Index()
         {
             Search SerachFilter = new Search();
-            SerachFilter.From = "zimbubue";
+
             return View(SerachFilter);
+        }
+
+        [HttpPost]
+        public IActionResult Index(Search SearchFilter)
+        {
+
+            //return View("Index","Flights");
+            return RedirectToAction("Index", "Flights",SearchFilter);
         }
 
         public IActionResult Privacy()
