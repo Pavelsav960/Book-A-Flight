@@ -6,7 +6,9 @@ namespace Booking.Models
     {
         [Key]
         [Display(Name = "Card holder ID number")]
-        public int IdNumber { get; set; }
+        //public int IdNumber { get; set; }
+
+        public string Email { get; set; } = null;
 
         [Display(Name = "Card holder first name")]
         public string CardHolderFirstName { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Booking.Data;
 using Booking.Models;
 
-namespace Booking
+namespace Booking.Controllers
 {
     public class PaymentController : Controller
     {
@@ -22,9 +22,9 @@ namespace Booking
         // GET: Payment
         public async Task<IActionResult> Index()
         {
-              return _context.payments != null ? 
-                          View(await _context.payments.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.payments'  is null.");
+            return _context.payments != null ?
+                        View(await _context.payments.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.payments'  is null.");
         }
 
         // GET: Payment/Details/5
@@ -60,9 +60,12 @@ namespace Booking
         {
             if (ModelState.IsValid)
             {
-                _context.Add(payment);
+                if (payment.SaveDetails == true)
+                {
+                    _context.Add(payment);
+                }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","Home");
             }
             return View(payment);
         }
@@ -150,14 +153,14 @@ namespace Booking
             {
                 _context.payments.Remove(payment);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PaymentExists(int id)
         {
-          return (_context.payments?.Any(e => e.IdNumber == id)).GetValueOrDefault();
+            return (_context.payments?.Any(e => e.IdNumber == id)).GetValueOrDefault();
         }
     }
 }
