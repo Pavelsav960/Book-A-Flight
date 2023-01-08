@@ -19,9 +19,8 @@ namespace Booking.Controllers
         {
             _context = context;
         }
-        public static List<Flight> FilterFlight = new List<Flight>();
-        public static Search search = new Search();
 
+        public static List<Flight> FilterFlight = new List<Flight>();
 
         public async Task<IActionResult> GetAllFlights(int id)
         {
@@ -41,7 +40,7 @@ namespace Booking.Controllers
             }
             if(id == 3)
             {
-                FilterFlight =  await _context.Flights.ToListAsync();
+                FilterFlight = await _context.Flights.ToListAsync();
                 return _context.Flights != null ?
                     View(await _context.Flights.Where(p => p.AvailableSeats > 0)
                         .Where(a => a.FlightDate >= DateTime.Now).ToListAsync()) :
@@ -70,15 +69,10 @@ namespace Booking.Controllers
                         .Where(a => a.FlightDate >= DateTime.Now)
                         .Where(b => b.Price <= SearchFilter.PriceMax && b.Price >= SearchFilter.PriceMin)
                         .ToListAsync();
-            return _context.Flights != null ?
-                        View(await _context.Flights.Where(x => x.DestinationCountry == SearchFilter.To)
-                        .Where(y => y.OriginCountry == SearchFilter.From)
-                        .Where(d => d.FlightDate >= SearchFilter.FlightDate && d.FlightDate <= SearchFilter.ReturnDate)
-                        .Where(p => p.AvailableSeats > 0)
-                        .Where(a => a.FlightDate >= DateTime.Now)
-                        .Where(b => b.Price <= SearchFilter.PriceMax && b.Price >= SearchFilter.PriceMin)
-                        .ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
+            return FilterFlight != null ?
+                 View(FilterFlight.Where(p => p.AvailableSeats > 0)
+                        .Where(a => a.FlightDate >= DateTime.Now).ToList()) :
+                Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
         }
 
         // GET: Flights/Details/5
