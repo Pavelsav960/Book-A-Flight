@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CardHolderFirstName)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CardHolderLastName)
+                @Html.DisplayNameFor(model => model.CardHolderName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CardNumber)
@@ -37,10 +37,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CardHolderFirstName)
+                    @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CardHolderLastName)
+                @Html.DisplayFor(modelItem => item.CardHolderName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CardNumber)
@@ -63,3 +63,7 @@
 }
     </tbody>
 </table>
+
+
+
+}

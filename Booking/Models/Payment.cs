@@ -6,15 +6,19 @@ namespace Booking.Models
     {
         [Key]
         [Display(Name = "Card holder ID number")]
-        //public int IdNumber { get; set; }
+        public int IdNumber { get; set; }
 
-        public string Email { get; set; } = null;
+        //[Display(Name = "Card holder first name")]
+        //public string CardHolderFirstName { get; set; }
 
-        [Display(Name = "Card holder first name")]
-        public string CardHolderFirstName { get; set; }
+        //[Display(Name = "Card holder full name")]
+        //public string CardHolderLastName { get; set;}
 
-        [Display(Name = "Card holder last name")]
-        public string CardHolderLastName { get; set;}
+        [Display(Name = "Card holder Email address")]
+        public string Email { get; set; }
+
+        [Display(Name = "Card holder full name")]
+        public string CardHolderName { get; set; }
 
         [Display(Name = "Card number")]
         public int CardNumber { get; set; }
