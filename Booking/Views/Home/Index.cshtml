@@ -55,3 +55,31 @@
     </form>
 
 </div>
+
+@section Scripts {
+    @if (ViewData["Success"] != null)
+    {
+        <script>
+            alert("Record created successfully!");
+        </script>
+    }
+
+    <script type="text/javascript">
+        
+        function openSuccessModal(strMessage){
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').Modal('show');
+        }
+
+        $(document).ready(function(){
+            var msg = "@TempData["Success"]";
+            if(msg =! null){
+                openSuccessModal(msg);
+            }
+        });
+
+    </script>
+
+
+}
