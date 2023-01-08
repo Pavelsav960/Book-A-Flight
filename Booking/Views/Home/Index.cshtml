@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="~/css/homeIndex.css" />
 </head>
 <div class="wrapper bg-white">
-    <form action="#">
+    <form method="post" asp-controller="Home">
         <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap">
             <label class="option my-sm-0 my-2">
                 <input type="radio" name="radio" checked>Round Trip
@@ -26,26 +26,48 @@
                 <span class="fas fa-dot-circle text-muted"></span>
             </div>
             <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
-                <input type="text" required placeholder="To" class="form-control">
+                @*<input type="text" required placeholder="To" class="form-control">*@
+                <input asp-for="To" class="form-control" />
                 <div class="label" id="to"></div>
                 <span class="fas fa-map-marker text-muted"></span>
             </div>
         </div>
         <div class="form-group d-sm-flex margin">
             <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
-                <input type="date" required placeholder="Depart Date" class="form-control">
+                @*<input type="date" required placeholder="Depart Date" class="form-control">*@
+                <label asp-for="FlightDate"></label>
+                <input asp-for="FlightDate" class="form-control" />
                 <div class="label" id="depart"></div>
             </div>
             <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
-                <input type="date" required placeholder="Return Date" class="form-control">
+                <label asp-for="ReturnDate"></label>
+                @*<input type="date" required placeholder="Return Date" class="form-control">*@
+                <input asp-for="ReturnDate" class="form-control" />
                 <div class="label" id="return"></div>
             </div>
         </div>
-        <div class="form-group border-bottom d-flex align-items-center position-relative">
+        
+        <div class="form-group d-sm-flex margin">
+            <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
+                <label asp-for="PriceMin"></label>
+                @*<input type="date" required placeholder="Depart Date" class="form-control">*@
+                <input asp-for="PriceMin" class="form-control" />
+                <div class="label" id="pricemin"></div>
+                <span class="fas fa-dot-circle text-muted"></span>
+            </div>
+            <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                <label asp-for="PriceMax"></label>
+                @*<input type="date" required placeholder="Return Date" class="form-control">*@
+                <input asp-for="PriceMax" class="form-control" />
+                <div class="label" id="maxprice"></div>
+                <span class="fas fa-map-marker text-muted"></span>
+            </div>
+        </div>
+        @*<div class="form-group border-bottom d-flex align-items-center position-relative">
             <input type="text" required placeholder="Traveller(s)" class="form-control">
             <div class="label" id="psngr"></div>
             <span class="fas fa-users text-muted"></span>
-        </div>
+        </div>*@
         <div class="form-group my-3">
             <div class="btn btn-primary rounded-0 d-flex justify-content-center text-center p-3">
                 <input type="submit" value="Search Flight"  class="btn btn-primary" />

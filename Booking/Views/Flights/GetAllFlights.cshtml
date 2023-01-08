@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Booking.Models.Flight>
+﻿
+@model IEnumerable<Booking.Models.Flight>
 
 @{
     ViewData["Title"] = "Flight List";
@@ -53,11 +54,13 @@
             </tr>
         }
     </tbody>
-    <a asp-action="GetAllFlights" asp-route-id="1">Order By Descending Price</a>
+    <a asp-action="GetAllFlights" asp-route-id="1">Order By Price Increase</a>
     <br />
-    <a asp-action="GetAllFlights" asp-route-id="2">Order By Ascending Price</a>
+    <a asp-action="GetAllFlights" asp-route-id="2">Order By Price Decrease </a>
     <br />
     <a asp-action="GetAllFlights" asp-route-id="4">Order By Origin Country</a>
     <br />
     <a asp-action="GetAllFlights" asp-route-id="3">View All The Flights</a>
+
 </table>
+
