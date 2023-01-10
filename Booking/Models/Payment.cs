@@ -21,7 +21,7 @@ namespace Booking.Models
         public string CardHolderName { get; set; }
 
         [Display(Name = "Card number")]
-        public int CardNumber { get; set; }
+        public string CardNumber { get; set; }
 
         [Display(Name = "Card expiry date(Month)")]
         public string ExparationMonth { get; set; }
