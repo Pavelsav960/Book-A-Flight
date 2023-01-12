@@ -10,7 +10,7 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                @*<h2>Use a local account to log in.</h2>*@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -31,12 +31,13 @@
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                   
+                    
                 </div>
                 <div>
-                    
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
+                    <br>
+                   
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class=" w-100 btn btn-secondary">Register as a new user</a>
                     
                 </div>
             </form>

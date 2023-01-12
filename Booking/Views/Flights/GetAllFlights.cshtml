@@ -71,8 +71,6 @@
     ViewData["Title"] = "Flight List";
 }
 
-<h1>Flight List</h1>
-
 @if (@Model == null || !@Model.Any())
 {
     <div class="alert alert-danger">
@@ -137,19 +135,27 @@ else
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
-                        <a asp-action="HowManyTickets" asp-route-id="@item.FlightId">Choose Number Of Tickets</a>
+                        <a asp-action="HowManyTickets" asp-route-id="@item.FlightId" class="btn btn-primary">Click Here to Choose Number Of Tickets</a>
 
                     </td>
                 </tr>
             }
         </tbody>
-        <a asp-action="GetAllFlights" asp-route-id="1">Order By Descending Price</a>
-        <br />
-        <a asp-action="GetAllFlights" asp-route-id="2">Order By Ascending Price</a>
-        <br />
-        <a asp-action="GetAllFlights" asp-route-id="4">Order By Origin Country</a>
-        <br />
-        @*<a asp-action="GetAllFlights" asp-route-id="3">View All The Flights</a>*@
+
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button type="button" class="btn btn-secondary">Order By</button>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                    <a asp-action="GetAllFlights" asp-route-id="1" class="btn btn-outline-secondary">Descending Price</a>
+                    <a asp-action="GetAllFlights" asp-route-id="2" class="btn btn-outline-secondary">Ascending Price</a>
+                    <a asp-action="GetAllFlights" asp-route-id="4" class="btn btn-outline-secondary">Origin Country</a>
+
+                    </div>
+                </div>
+            </div>
+
+
     </table>
 }
 

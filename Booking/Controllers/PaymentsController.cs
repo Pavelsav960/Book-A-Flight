@@ -59,23 +59,25 @@ namespace Booking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdNumber,Email,CardHolderName,CardNumber,ExparationMonth,ExparationYear,SaveDetails")] Payment payment)
         {
-            if (!CardValidator.IsValidCardNumber(payment.CardNumber))
-            {
-                ModelState.AddModelError("CardNumber", "Invalid Card Number");
-
-            }
-            if (Int32.Parse(payment.ExparationYear) < Int32.Parse(DateTime.Now.Year.ToString()))
-            {
-                ModelState.AddModelError("ExparationYear", "Invalid Card Exparation Year");
-
-            }
-            if (Int32.Parse(payment.ExparationMonth) < Int32.Parse(DateTime.Now.Month.ToString()))
-            {
-                ModelState.AddModelError("ExparationMonth", "Invalid Card Exparation Month");
-
-            }
+            
             if (ModelState.IsValid)
             {
+                if (!CardValidator.IsValidCardNumber(payment.CardNumber))
+                {
+                    ModelState.AddModelError("CardNumber", "Invalid Card Number");
+
+                }
+                if (Int32.Parse(payment.ExparationYear) < Int32.Parse(DateTime.Now.Year.ToString()))
+                {
+                    ModelState.AddModelError("ExparationYear", "Invalid Card Exparation Year");
+
+                }
+                if (Int32.Parse(payment.ExparationMonth) < Int32.Parse(DateTime.Now.Month.ToString()))
+                {
+                    ModelState.AddModelError("ExparationMonth", "Invalid Card Exparation Month");
+
+                }
+
                 if (payment.SaveDetails == false)
                 {
                     payment.CardNumber = "";

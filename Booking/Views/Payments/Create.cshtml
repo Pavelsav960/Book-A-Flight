@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Almost Done !</h1>
 
-<h4>Payment</h4>
+@*<h4>Payment</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,20 +39,22 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
+
                     <input class="form-check-input" asp-for="SaveDetails" /> @Html.DisplayNameFor(model => model.SaveDetails)
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" onclick="return validateCardNumber()" class="btn btn-primary" />
+                <br>
+                <input type="submit" value="Pay Now" onclick="return validateCardNumber()" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+@*<div>
+    <a asp-action="Index" class="btn btn-warning">Back to List</a>
 </div>
-
+*@
 <script>
     function validateCardNumber() {
         var cardNumber = document.getElementById("CardNumber").value;
