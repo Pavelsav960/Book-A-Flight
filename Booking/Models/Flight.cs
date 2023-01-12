@@ -29,10 +29,10 @@ namespace Booking.Models
         [Display(Name = "Return Date")]
         public DateTime ReturnDate { get; set; } = DateTime.Now;
 
-        public void SeatTaken()
-        {
-            AvailableSeats -= 1;
-        }
+        //public void SeatTaken()
+        //{
+        //    AvailableSeats -= 1;
+        //}
 
     }
 }
