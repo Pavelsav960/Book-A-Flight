@@ -156,8 +156,7 @@ namespace Booking.Controllers
                 DepartingSeatNumber = flight.AvailableSeats
             };
 
-            _context.Add(newBook);
-            flight.SeatTaken();
+            _context.Add(newBook);       
             await _context.SaveChangesAsync();
             return View(flight);
         }

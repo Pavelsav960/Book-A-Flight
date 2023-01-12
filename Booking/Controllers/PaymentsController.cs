@@ -103,7 +103,7 @@ namespace Booking.Controllers
                 payment.Email = User.Identity.Name;
                 
                 var email = User.Identity.Name;
-
+                flight.AvailableSeats -= PaymentTickets;
                 BookingModel newBook = new BookingModel()
                 {
                     NumOfTickets = PaymentTickets,
@@ -112,9 +112,7 @@ namespace Booking.Controllers
                     ReturnFlightId = flight.FlightId,
                     DepartingSeatNumber = flight.AvailableSeats
                 };
-
                 _context.Add(newBook);
-                flight.AvailableSeats -= PaymentTickets;
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = true;

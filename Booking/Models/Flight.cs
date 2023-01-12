@@ -23,10 +23,10 @@ namespace Booking.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime ReturnDate { get; set; } = DateTime.Now;
 
-        public void SeatTaken()
-        {
-            AvailableSeats -= 1;
-        }
+        //public void SeatTaken()
+        //{
+        //    AvailableSeats -= 1;
+        //}
 
     }
 }
