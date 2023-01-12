@@ -21,21 +21,22 @@ namespace Booking.Controllers
         }
 
         public static List<Flight> FilterFlight = new List<Flight>();
+        public static Flight ChoosenFlight { get; set; }
+        public static Search SearchObject { get; set; }
 
         public async Task<IActionResult> GetAllFlights(int id)
         {
             if(id == 1)
             {
+                //Price Descending Order
                 return _context.Flights != null ?
-                 View(FilterFlight.Where(p => p.AvailableSeats > 0)
-                        .Where(a => a.FlightDate >= DateTime.Now).OrderByDescending(x => x.Price).ToList()) :
+                 View(FilterFlight.OrderByDescending(x => x.Price).ToList()) :
                 Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
             }
             if(id == 2) 
             {
                 return _context.Flights != null ?
-                 View(FilterFlight.Where(p => p.AvailableSeats > 0)
-                        .Where(a => a.FlightDate >= DateTime.Now).OrderBy(x => x.Price).ToList()) :
+                 View(FilterFlight.OrderBy(x => x.Price).ToList()) :
                 Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
             }
             if(id == 3)
@@ -49,29 +50,48 @@ namespace Booking.Controllers
             if(id == 4)
             {
                 return _context.Flights != null ?
-                 View(FilterFlight.Where(p => p.AvailableSeats > 0)
-                        .Where(a => a.FlightDate >= DateTime.Now).OrderBy(x => x.OriginCountry).ToList()) :
+                 View(FilterFlight.OrderBy(x => x.OriginCountry).ToList()) :
                 Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
             }
 
-            return _context.Flights != null ?
-          View(await _context.Flights.Where(p => p.AvailableSeats > 0)
-                        .Where(a => a.FlightDate >= DateTime.Now).ToListAsync()) :
-                 Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
+            return FilterFlight != null ?
+                 View(FilterFlight.ToList()) :
+                Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
         }
         public async Task<IActionResult> Index(Search SearchFilter,int id)
         {
-           
-            FilterFlight = await _context.Flights.Where(x => x.DestinationCountry == SearchFilter.To)
+            if (SearchFilter.isOneWay == true)
+            {
+                SearchFilter.ReturnDate = DateTime.MinValue;
+                FilterFlight = await _context.Flights.Where(x => x.DestinationCountry == SearchFilter.To)
                         .Where(y => y.OriginCountry == SearchFilter.From)
-                        .Where(d => d.FlightDate >= SearchFilter.FlightDate && d.FlightDate <= SearchFilter.ReturnDate)
+                        .Where(d => d.FlightDate.Date == SearchFilter.FlightDate.Date)
                         .Where(p => p.AvailableSeats > 0)
                         .Where(a => a.FlightDate >= DateTime.Now)
                         .Where(b => b.Price <= SearchFilter.PriceMax && b.Price >= SearchFilter.PriceMin)
                         .ToListAsync();
+            }
+            else
+            {
+                FilterFlight = await _context.Flights.Where(x => x.DestinationCountry == SearchFilter.To)
+                        .Where(y => y.OriginCountry == SearchFilter.From)
+                        .Where(d => d.FlightDate.Date == SearchFilter.FlightDate.Date)
+                        .Where(c => c.ReturnDate != DateTime.MinValue)
+                        .Where(p => p.AvailableSeats > 0)
+                        .Where(a => a.FlightDate >= DateTime.Now)
+                        .Where(b => b.Price <= SearchFilter.PriceMax && b.Price >= SearchFilter.PriceMin)
+                        .ToListAsync();
+            }
+            //FilterFlight = await _context.Flights.Where(x => x.DestinationCountry == SearchFilter.To)
+            //            .Where(y => y.OriginCountry == SearchFilter.From)
+            //            .Where(d => d.FlightDate >= SearchFilter.FlightDate && d.FlightDate <= SearchFilter.ReturnDate)
+            //            .Where(p => p.AvailableSeats > 0)
+            //            .Where(a => a.FlightDate >= DateTime.Now)
+            //            .Where(b => b.Price <= SearchFilter.PriceMax && b.Price >= SearchFilter.PriceMin)
+            //            .ToListAsync();
+            
             return FilterFlight != null ?
-                 View(FilterFlight.Where(p => p.AvailableSeats > 0)
-                        .Where(a => a.FlightDate >= DateTime.Now).ToList()) :
+                 View(FilterFlight.ToList()) :
                 Problem("Entity set 'ApplicationDbContext.Flights'  is null.");
         }
 
@@ -159,6 +179,45 @@ namespace Booking.Controllers
             }
             return View(flight);
         }
+
+        public async Task<IActionResult> HowManyTickets(int? id)
+        {
+            if (id == null || _context.Flights == null)
+            {
+                return NotFound();
+            }
+
+            var flight = await _context.Flights.FindAsync(id);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+            ChoosenFlight = flight;
+            BookingModel booking = new BookingModel()
+            {
+                DepartingFlightId = flight.FlightId
+            };
+            return View(booking);
+        
+        }
+        public async Task<IActionResult> GoToPayment(BookingModel booking)
+        {
+            if (/*id == null ||*/ _context.Flights == null)
+            {
+                return NotFound();
+            }
+
+            var flight = await _context.Flights.FindAsync(ChoosenFlight.FlightId);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+            
+            //flight.AvailableSeats -= tickets;
+            //return View("Index","Flights");
+            return RedirectToAction("Create", "Payments", new{ flight.FlightId, booking.NumOfTickets}) ;
+        }
+       
 
         private bool FlightExists(int id)
         {
