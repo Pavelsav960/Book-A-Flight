@@ -13,7 +13,6 @@ namespace Booking.Models
         public int DepartingSeatNumber { get; set; }
         [Required]
         public string BookingEmail { get; set; }
-
-
-    }
+        public int NumOfTickets { get; set; }
+    } 
 }

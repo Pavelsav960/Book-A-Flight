@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Booking.Data;
+﻿using Booking.Data;
 using Booking.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Booking.Controllers
 {
@@ -14,6 +10,9 @@ namespace Booking.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+        public static Flight flightObject { get; set; }
+        public static int PaymentTickets { get; set; }
+        public static int PaymentflightId { get; set; }
         public PaymentsController(ApplicationDbContext context)
         {
             _context = context;
@@ -22,9 +21,9 @@ namespace Booking.Controllers
         // GET: Payments
         public async Task<IActionResult> Index()
         {
-              return _context.payments != null ? 
-                          View(await _context.payments.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.payments'  is null.");
+            return _context.payments != null ?
+                        View(await _context.payments.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.payments'  is null.");
         }
 
         // GET: Payments/Details/5
@@ -46,8 +45,10 @@ namespace Booking.Controllers
         }
 
         // GET: Payments/Create
-        public IActionResult Create()
+        public IActionResult Create(int flightID,int numOfTickets)
         {
+            PaymentTickets = numOfTickets;
+            PaymentflightId = flightID;
             return View();
         }
 
@@ -58,16 +59,66 @@ namespace Booking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdNumber,Email,CardHolderName,CardNumber,ExparationMonth,ExparationYear,SaveDetails")] Payment payment)
         {
+            if (!CardValidator.IsValidCardNumber(payment.CardNumber))
+            {
+                ModelState.AddModelError("CardNumber", "Invalid Card Number");
+
+            }
+            if (Int32.Parse(payment.ExparationYear) < Int32.Parse(DateTime.Now.Year.ToString()))
+            {
+                ModelState.AddModelError("ExparationYear", "Invalid Card Exparation Year");
+
+            }
+            if (Int32.Parse(payment.ExparationMonth) < Int32.Parse(DateTime.Now.Month.ToString()))
+            {
+                ModelState.AddModelError("ExparationMonth", "Invalid Card Exparation Month");
+
+            }
             if (ModelState.IsValid)
             {
-                if(payment.SaveDetails == false)
+                if (payment.SaveDetails == false)
                 {
                     payment.CardNumber = "";
+
+                }
+                else 
+                {
+                    var FindKey = await _context.Bookings
+                    .FirstOrDefaultAsync(m => m.DepartingFlightId == 1);
+                    string TempCardNumber = EncryptionClass.EncryptCardNumber(payment.CardNumber, FindKey.BookingEmail);
+                    payment.CardNumber = TempCardNumber;
+                    string DecryptCardNumber = EncryptionClass.DecryptCardNumber(TempCardNumber, FindKey.BookingEmail);
+                }
+                if (_context.Flights == null)
+                {
+                    return NotFound();
+                }
+
+                var flight = await _context.Flights
+                    .FirstOrDefaultAsync(m => m.FlightId == PaymentflightId);
+                if (flight == null)
+                {
+                    return NotFound();
                 }
                 payment.Email = User.Identity.Name;
+                
+                var email = User.Identity.Name;
+
+                BookingModel newBook = new BookingModel()
+                {
+                    NumOfTickets = PaymentTickets,
+                    BookingEmail = email,
+                    DepartingFlightId = flight.FlightId,
+                    ReturnFlightId = flight.FlightId,
+                    DepartingSeatNumber = flight.AvailableSeats
+                };
+
+                _context.Add(newBook);
+                flight.AvailableSeats -= PaymentTickets;
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                TempData["Success"] = true;
+                return RedirectToAction("Index", "Home");
             }
             return View(payment);
         }
@@ -155,14 +206,14 @@ namespace Booking.Controllers
             {
                 _context.payments.Remove(payment);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PaymentExists(int id)
         {
-          return (_context.payments?.Any(e => e.IdNumber == id)).GetValueOrDefault();
+            return (_context.payments?.Any(e => e.IdNumber == id)).GetValueOrDefault();
         }
     }
 }

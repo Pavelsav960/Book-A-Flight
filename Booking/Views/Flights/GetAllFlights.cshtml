@@ -1,4 +1,4 @@
-﻿
+﻿@*
 @model IEnumerable<Booking.Models.Flight>
 
 @{
@@ -63,4 +63,93 @@
     <a asp-action="GetAllFlights" asp-route-id="3">View All The Flights</a>
 
 </table>
+
+*@
+@model IEnumerable<Booking.Models.Flight>
+
+@{
+    ViewData["Title"] = "Flight List";
+}
+
+<h1>Flight List</h1>
+
+@if (@Model == null || !@Model.Any())
+{
+    <div class="alert alert-danger">
+        No flights found
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OriginCountry)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DestinationCountry)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FlightDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReturnDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AvailableSeats)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OriginCountry)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DestinationCountry)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FlightDate)
+                    </td>
+                    @if (item.ReturnDate != DateTime.MinValue)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReturnDate)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            One Way
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AvailableSeats)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a asp-action="HowManyTickets" asp-route-id="@item.FlightId">Choose Number Of Tickets</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <a asp-action="GetAllFlights" asp-route-id="1">Order By Descending Price</a>
+        <br />
+        <a asp-action="GetAllFlights" asp-route-id="2">Order By Ascending Price</a>
+        <br />
+        <a asp-action="GetAllFlights" asp-route-id="4">Order By Origin Country</a>
+        <br />
+        <a asp-action="GetAllFlights" asp-route-id="3">View All The Flights</a>
+    </table>
+}
 
