@@ -2,7 +2,10 @@
 
 <head>
     <link rel="stylesheet" href="~/css/homeIndex.css" />
+    
 </head>
+
+
 <div class="wrapper bg-white">
     <form method="post" asp-controller="Home">
         <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap">
@@ -82,7 +85,7 @@
     @if (@TempData["Success"] != null)
     {
         <script>
-            alert("Payment was successful , Thank you for booking with us !!");
+            alert("Payment was successful , Thank you for booking with us !");
         </script>
     }
     <script>

@@ -29,7 +29,7 @@ namespace Booking.Models
         [Display(Name = "Card expiry date(Year)")]
         public string ExparationYear { get; set;}
 
-        [Display(Name = "Save card Details ?")]
+        [Display(Name = "Remember Me?")]
         public bool SaveDetails { get; set; }
 
         public static bool IsValidCardNumber(string cardNumber)
