@@ -14,19 +14,19 @@ namespace Booking.Models
         //[Display(Name = "Card holder full name")]
         //public string CardHolderLastName { get; set;}
 
-        [Display(Name = "Card holder Email address")]
+        [Display(Name = "Card holder Email address:")]
         public string Email { get; set; }
 
-        [Display(Name = "Card holder full name")]
+        [Display(Name = "Card holder full name :")]
         public string CardHolderName { get; set; }
 
-        [Display(Name = "Card number")]
+        [Display(Name = "Card number :")]
         public int CardNumber { get; set; }
 
-        [Display(Name = "Card expiry date(Month)")]
+        [Display(Name = "Card expiry date(Month) :")]
         public string ExparationMonth { get; set; }
 
-        [Display(Name = "Card expiry date(Year)")]
+        [Display(Name = "Card expiry date(Year) :")]
         public string ExparationYear { get; set;}
 
         [Display(Name = "Save card Details ?")]

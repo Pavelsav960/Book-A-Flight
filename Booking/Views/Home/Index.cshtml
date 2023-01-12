@@ -79,29 +79,10 @@
 </div>
 
 @section Scripts {
-    @if (ViewData["Success"] != null)
+    @if (@TempData["Success"] != null)
     {
         <script>
-            alert("Record created successfully!");
+            alert("Payment was successful , Thank you for booking with us !");
         </script>
     }
-
-    <script type="text/javascript">
-        
-        function openSuccessModal(strMessage){
-            var myDiv = document.getElementById("MyModalSuccessAlertBody");
-            myDiv.innerHTML = strMessage;
-            $('#myModalSuccess').Modal('show');
-        }
-
-        $(document).ready(function(){
-            var msg = "@TempData["Success"]";
-            if(msg =! null){
-                openSuccessModal(msg);
-            }
-        });
-
-    </script>
-
-
 }

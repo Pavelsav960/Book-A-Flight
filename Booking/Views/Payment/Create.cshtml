@@ -13,6 +13,15 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label for ="price" class="control-label">Price per ticket :</label>
+                <input type="text" class="form-control" readonly="readonly"  />
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" required placeholder="Example@gmail.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" required placeholder="Example@gmail.com" />
                 <span asp-validation-for="Email" class="text-danger"></span>
@@ -24,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CardNumber" class="control-label"></label>
-                <input asp-for="CardNumber" class="form-control" minlength="16" maxlength="16" required placeholder="Example : 5997 5997 5997 5997" />
+                <input asp-for="CardNumber" class="form-control" minlength="2" maxlength="16" required placeholder="Example : 5997 5997 5997 5997" />
                 <span asp-validation-for="CardNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -44,6 +53,7 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Pay Now" class="btn btn-primary" />
+             
             </div>
         </form>
     </div>
@@ -57,12 +67,12 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
 
-    @*@if (ViewData["Success"] != null)
+    @if (ViewBag.Success != null)
     {
             <script>
         alert("Record created successfully!");
             </script>
-    }*@
+    }
 
     
 

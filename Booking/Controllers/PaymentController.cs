@@ -28,23 +28,6 @@ namespace Booking.Controllers
                         Problem("Entity set 'ApplicationDbContext.payments'  is null.");
         }
 
-        // GET: Payment/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.payments == null)
-            {
-                return NotFound();
-            }
-
-            var payment = await _context.payments
-                .FirstOrDefaultAsync(m => m.IdNumber == id);
-            if (payment == null)
-            {
-                return NotFound();
-            }
-
-            return View(payment);
-        }
 
         // GET: Payment/Create
         public IActionResult Create()
@@ -61,12 +44,14 @@ namespace Booking.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (payment.SaveDetails == true)
                 {
                     _context.Add(payment);
                 }
                 await _context.SaveChangesAsync();
-                ViewData["Success"] = "Payment was successful , Thank you for booking with us !";
+                TempData["Success"] = true;
+               
                 return RedirectToAction("Index","Home");
             }
             return View(payment);
