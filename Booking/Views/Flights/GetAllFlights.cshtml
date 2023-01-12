@@ -83,7 +83,7 @@ else
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.OriginCountry)
+                     @Html.DisplayNameFor(model => model.OriginCountry)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DestinationCountry)
@@ -106,7 +106,7 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="table-light">
                     <td>
                         @Html.DisplayFor(modelItem => item.OriginCountry)
                     </td>

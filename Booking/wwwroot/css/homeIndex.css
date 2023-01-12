@@ -1,22 +1,17 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 /* Resetting */
-/** {
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-}**/
+}
 
+body {
+    background-color: #dcf4ff;
+}
 
-/*body {
-    background-image: url('../images/—pngtree—cartoon.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    margin: auto;
-    margin-bottom: 60px;
-}*/
 .wrapper {
     max-width: 800px;
     margin: 50px auto;
@@ -172,5 +167,3 @@ input[type="date"] {
         margin: .2rem 0rem;
     }
 }
-
-
